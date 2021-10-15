@@ -113,6 +113,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/create", (req, res) => {
+    res.setHeader('X-Robots-Tag', 'noindex');
     let abc = "abcdefghijklmnopqrstuvwxyz";
     let id = ""
     for (let i = 0; i < 10; i++) {
@@ -130,6 +131,7 @@ app.get("/create", (req, res) => {
 });
 
 app.get('/piece', (req, res) => {
+    res.setHeader('X-Robots-Tag', 'noindex');
     let game = req.query.game;
     if (boards[game] != null) {
         let currBoard = boards[game].getBoard();
@@ -142,6 +144,7 @@ app.get('/piece', (req, res) => {
 })
 
 app.get("/game/:gameid", (req, res) => {
+    res.setHeader('X-Robots-Tag', 'noindex');
     if (!gamesStarted[req.params.gameid]) {
         gamesStarted[req.params.gameid] = false;
     }
@@ -155,6 +158,7 @@ app.get("/game/:gameid", (req, res) => {
 });
 
 app.get('/move', (req, res) => {
+    res.setHeader('X-Robots-Tag', 'noindex');
     if (req.query.x < 0 || req.query.y < 0) {
         res.json({err: "no"});
     }
@@ -182,6 +186,7 @@ app.get('/move', (req, res) => {
 })
 
 app.post('/import', (req, res) => {
+    res.setHeader('X-Robots-Tag', 'noindex');
     let abc = "abcdefghijklmnopqrstuvwxyz1234567890";
     let id = ""
     for (let i = 0; i < 10; i++) {
@@ -199,6 +204,7 @@ app.post('/import', (req, res) => {
 })
 
 app.get('/metrics', async (req, res) => {
+    res.setHeader('X-Robots-Tag', 'noindex');
     res.setHeader('Content-Type', register.contentType);
     let metrics = await register.metrics();
     res.send(metrics);
