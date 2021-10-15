@@ -178,6 +178,10 @@ app.get('/move', (req, res) => {
             res.status(200).send();
             return;
         }
+        if (piece.getShortName() == 'n' || piece.getName() == 'none' || piece.getName() == 'empty') {
+            res.status(200).send();
+            return;
+        }
         // Continue work
         currBoard.setPiece(piece, req.query.targetX, req.query.targetY);
         currBoard.setPiece(currBoard.getEmptyPiece(req.query.x, req.query.y), req.query.x, req.query.y);

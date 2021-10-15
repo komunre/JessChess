@@ -70,7 +70,7 @@ class board {
     }
 
     getEmptyPiece(x, y) {
-        return new piece(x, y, "empty", true, 'n');
+        return new piece(x, y, "none", true, 'n');
     }
 
     getPiecesStr() {
