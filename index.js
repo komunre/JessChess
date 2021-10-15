@@ -3,6 +3,26 @@ const { read } = require('fs');
 const board = require('./board');
 const cookieParser = require("cookie-parser");
 const fileupload = require("express-fileupload");
+const prom = require('prom-client')
+
+const register = new prom.Registry();
+register.setDefaultLabels({
+    app: 'jesschess'
+});
+prom.collectDefaultMetrics({ register });
+
+let gamesTotal = new prom.Counter({
+    name: 'games_total',
+    help: "Total games created",
+});
+
+let movesTotal = new prom.Counter({
+    name: 'moves_total',
+    help: 'Total moves in all games',
+});
+
+register.registerMetric(gamesTotal);
+register.registerMetric(movesTotal);
 
 class boardState {
     constructor(board) {
@@ -105,6 +125,7 @@ app.get("/create", (req, res) => {
     boards[id] = new boardState(new board);
     console.log(`Game created. List of games:`)
     console.log(boards);
+    gamesTotal.inc();
     return res.redirect("/game/" + id);
 });
 
@@ -154,13 +175,14 @@ app.get('/move', (req, res) => {
         sendGameState(req.query.game);
         console.log("Broadcasted");
         res.status(200).send();
+        movesTotal.inc();
         return;
     }
     res.status(404).send();
 })
 
 app.post('/import', (req, res) => {
-    let abc = "abcdefghijklmnopqrstuvwxyz";
+    let abc = "abcdefghijklmnopqrstuvwxyz1234567890";
     let id = ""
     for (let i = 0; i < 10; i++) {
         id += abc[Math.floor(Math.random() * abc.length)];
@@ -172,8 +194,15 @@ app.post('/import', (req, res) => {
     boards[id] = new boardState(new board(req.files.importFile.data));
     console.log(`Game created. List of games:`)
     console.log(boards);
+    gamesTotal.inc();
     return res.redirect("/game/" + id);
 })
+
+app.get('/metrics', async (req, res) => {
+    res.setHeader('Content-Type', register.contentType);
+    let metrics = await register.metrics();
+    res.send(metrics);
+});
 
 server.listen(process.env.PORT, '0.0.0.0', () => {
     console.log(`Listening at ${process.env.PORT}`);
