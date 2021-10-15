@@ -105,14 +105,12 @@ function drawBoardNew(pieces, colors) {
                     getImage(td, 'empty', j ,i);
                     break;
             }
-            if (colors[i][j] == 'w' && pieces[i][j] != 'n') {
-                td.className = 'white';
-            }
-            else if (colors[i][j] == 'b'&& pieces[i][j] != 'n') {
+
+            if ((j + i) % 2 == 1) {
                 td.className = 'black';
             }
             else {
-                td.className = 'unknown';
+                td.className = 'white';
             }
             tr.appendChild(td);
         }

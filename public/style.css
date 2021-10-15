@@ -4,7 +4,7 @@
 }
 
 #board {
-    background-color: cadetblue;
+    background-color: black;
     width: fit-content;
 }
 
@@ -15,7 +15,7 @@
 }
 
 .black {
-    background-color: wheat;
+    background-color: rgb(153, 138, 110);
     width: 60px;
     height: 60px;
 }
