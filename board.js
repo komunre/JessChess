@@ -1,7 +1,7 @@
 class board {
     constructor(bdata = null) {
         if (bdata == null) {
-            this.pieces = ["bkrqirkb", "pppppppp", "", "", "", "", "pppppppp", "bkrqirkb"];
+            this.pieces = ["rkbqibkr", "pppppppp", "", "", "", "", "pppppppp", "rkbqibkr"];
             this.colors = ["bbbbbbbb", "bbbbbbbb", "", "", "", "", "wwwwwwww", "wwwwwwww"];
         }
         else {
