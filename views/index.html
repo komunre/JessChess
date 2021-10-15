@@ -7,15 +7,17 @@
         <script src="main.js"></script>
     </head>
     <body>
-        <h1>JessChess</h1>
-        <p>Simple chess. You can move pieces and play with friends online for free. That's it. Project is open source.</p>
-        <p>Looks like tgstation and SS14 chess btw.</p>
-        <button class="centered" onclick="startGame()">Start Game</button>
-        <br/>
-        <h2>Game import</h2>
-        <form method="post" action="/import" enctype="multipart/form-data">
-            <input type="file" name="importFile"/>
-            <input type="submit" value="import"/>
-        </form>
+        <div id="gameBody">
+            <h1>JessChess</h1>
+            <p>Simple chess. You can move pieces and play with friends online for free. That's it. Project is open source.</p>
+            <p>Looks like tgstation and SS14 chess btw.</p>
+            <button class="centered" onclick="startGame()">Start Game</button>
+            <br/>
+            <h2>Game import</h2>
+            <form method="post" action="/import" enctype="multipart/form-data">
+                <input type="file" name="importFile"/>
+                <input type="submit" value="import"/>
+            </form>
+        </div>
     </body>
 </html>

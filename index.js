@@ -85,9 +85,16 @@ webSocketServer.on('connection', ws => {
 
 function sendGameState(game) {
     if (boards[game]) {
+        let remove = [];
         boards[game].getPlayers().forEach(player => {
-           player.send(JSON.stringify({ req: "board" })) 
+            if (player.readyState !== player.OPEN) {
+                remove.push(player);
+            }
+            player.send(JSON.stringify({ req: "board" })) 
         });
+        remove.forEach(player => {
+            boards[game].getPlayers().splice(boards[game].getPlayers().indexOf(player), 1);
+        })
     }
 }
 

@@ -129,7 +129,7 @@ function getImage(td, name, x, y, color) {
         if (chosenX == -1 && chosenY == -1) {
             chosenX = x;
             chosenY = y;
-            document.getElementById("ch").innerHTML = name;
+            document.getElementById("ch").innerHTML = name + `, ${x}:${y}`;
         }
         else {
             console.log("Requesting piece move");
@@ -153,3 +153,13 @@ function getImage(td, name, x, y, color) {
 function save() {
     ws.send(JSON.stringify({ req: "save", game: game }))
 }
+
+setInterval(() => { 
+    if (ws.readyState !== ws.OPEN) {
+        let error = document.getElementById("error");
+        error.innerHTML = "NO CONNECTION!";
+        error.style.backgroundColor = 'rgb(255, 0, 0)';
+        return; 
+    }
+    ws.send(JSON.stringify({ req: "keepalive" })) 
+}, 1500);

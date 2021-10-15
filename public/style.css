@@ -6,6 +6,8 @@
 #board {
     background-color: black;
     width: fit-content;
+    left: calc(50% - 240px);
+    position: relative;
 }
 
 .white {
@@ -38,4 +40,35 @@
 #ch {
     display: inline;
     white-space: nowrap;
+}
+
+#error {
+    text-align: center;
+    width: 480px;
+    left: calc(50% - 240px);
+    position: relative;
+}
+
+#gameBody {
+    right: 20%;
+    left: 20%;
+    position: absolute;
+    text-align: center;
+    align-items: center;
+    background-color: cadetblue;
+    bottom: 5px;
+    top: 5px;
+}
+
+@font-face {
+    font-family: Fell;
+    src: url("fonts/IMFellEnglishSC-Regular.ttf");
+}
+
+body {
+    font-family: Fell;
+}
+
+p {
+    font-size: 24px;
 }
