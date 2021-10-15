@@ -58,7 +58,29 @@
     background-color: cadetblue;
     bottom: 5px;
     top: 5px;
+    word-wrap: break-word;
 }
+
+@media (max-width: 940px) {
+    #gameBody {
+        height:fit-content;
+        bottom: auto;
+        top:auto;
+        right: auto;
+        left: auto;
+        position: relative;
+        font-size: 30px;
+    }
+
+    #start {
+        font-size: 30px;
+    }
+
+    #save {
+        font-size: 30px;
+    }
+}
+
 
 @font-face {
     font-family: Fell;
