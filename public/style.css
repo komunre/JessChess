@@ -25,3 +25,8 @@
     width: 60px;
     height: 60px;
 }
+
+#ch {
+    display: inline;
+    white-space: nowrap;
+}

@@ -168,12 +168,14 @@ function getImage(td, name, x, y) {
         if (chosenX == -1 && chosenY == -1) {
             chosenX = x;
             chosenY = y;
+            document.getElementById("ch").innerHTML = name;
         }
         else {
             console.log("Requesting piece move");
             requestPieceMove(chosenX, chosenY, x, y);
             chosenX = -1;
             chosenY = -1;
+            document.getElementById("ch").innerHTML = "none";
         }
     });
     td.appendChild(button);
