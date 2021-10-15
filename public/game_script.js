@@ -162,4 +162,4 @@ setInterval(() => {
         return; 
     }
     ws.send(JSON.stringify({ req: "keepalive" })) 
-}, 1500);
+}, 1000);
