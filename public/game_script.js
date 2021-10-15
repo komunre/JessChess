@@ -81,24 +81,25 @@ function drawBoardNew(pieces, colors) {
         let tr = document.createElement("tr");
         for (let j  = 0; j < pieces[i].length; j++) {
             let td = document.createElement('td');
+            let color  = colors[i][j];
             switch(pieces[i][j]) {
                 case 'b':
-                    getImage(td, "bishop", j, i);
+                    getImage(td, "bishop", j, i, color);
                     break;
                 case 'p':
-                    getImage(td, "pawn", j ,i);
+                    getImage(td, "pawn", j ,i, color);
                     break;
                 case 'r':
-                    getImage(td, 'rook', j ,i);
+                    getImage(td, 'rook', j ,i, color);
                     break;
                 case 'k':
-                    getImage(td, 'knight', j ,i);
+                    getImage(td, 'knight', j ,i, color);
                     break;
                 case 'q':
-                    getImage(td, 'queen', j ,i);
+                    getImage(td, 'queen', j ,i, color);
                     break;
                 case 'i':
-                    getImage(td, 'king', j ,i);
+                    getImage(td, 'king', j ,i, color);
                     break;
                 default:
                     getImage(td, 'empty', j ,i);
@@ -120,59 +121,10 @@ function drawBoardNew(pieces, colors) {
     board.appendChild(table)
 }
 
-function drawBoard() {
-    let board = document.getElementById("board");
-    board.removeChild(board.lastChild);
-    let table = document.createElement("table");
-    for (let i = 0; i < 8; i++) {
-        let tr = document.createElement("tr");
-        for (let j = 0; j < 8; j++) {
-            let td = document.createElement('td');
-            let resp = requestPiece(j, i);
-            //let resp = {name: piece, white: white};
-            if (resp.white) {
-                td.className = "white";
-            }
-            else {
-                td.className = 'black';
-            }
-            switch (resp.name) {
-                case 'pawn':
-                    getImage(td, "pawn", j ,i);
-                    break;
-                case 'bishop':
-                    getImage(td, "bishop", j ,i);
-                    break;
-                case 'rook':
-                    getImage(td, 'rook', j ,i);
-                    break;
-                case 'knight':
-                    getImage(td, 'knight', j ,i);
-                    break;
-                case 'queen':
-                    getImage(td, 'queen', j ,i);
-                    break;
-                case 'king':
-                    getImage(td, 'king', j ,i);
-                    break;
-                default:
-                    getImage(td, 'empty', j ,i);
-                    break;
-            }
-            piece = null;
-            white = false;
-            tr.appendChild(td);
-        }
-        table.appendChild(tr);
-    }
-    board.appendChild(table)
-    console.log("Got board!");
-}
-
 let chosenX = -1;
 let chosenY = -1;
 
-function getImage(td, name, x, y) {
+function getImage(td, name, x, y, color) {
     let button = document.createElement('button');
     button.innerHTML = name;
     button.addEventListener('click', function() {
@@ -190,6 +142,13 @@ function getImage(td, name, x, y) {
         }
     });
     button.className = "piece_button";
+    if (color !== undefined) {
+        let colorChar = color;
+        let urlStr = "url('pieces/" + colorChar + "_" + name + ".png')";
+        td.style.backgroundImage = urlStr;
+        td.style.backgroundRepeat = "no-repeat";
+        td.style.backgroundSize = "100% 100%";
+    }
     td.appendChild(button);
 }
 
