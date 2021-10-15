@@ -1,6 +1,14 @@
 let board = "";
 let game = window.location.href.split("/")[4];
-let ws = new WebSocket("ws://" + document.location.host + "/socket");
+let ws = null;
+if (document.location.href.indexOf("https://") == 0){
+    console.log("Connecting secure...");
+    ws = new WebSocket("wss://" + document.location.host + "/socket");
+}
+else {
+    console.log("Connecting insecure...");
+    ws = new WebSocket("ws://" + document.location.host + "/socket");
+}
 
 let piece = null;
 let white = false;
@@ -54,7 +62,7 @@ function drawBoardNew(pieces, colors) {
     console.log(pieces);
     console.log("colors: ");
     console.log(colors);
-    
+
     let board = document.getElementById("board");
     board.removeChild(board.lastChild);
     let table = document.createElement("table");
