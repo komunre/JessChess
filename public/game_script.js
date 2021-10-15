@@ -1,5 +1,8 @@
 let board = "";
 let game = window.location.href.split("/")[4];
+
+const ding = new Audio("sound/ding.wav");
+
 let ws = null;
 if (document.location.href.indexOf("https://") == 0){
     console.log("Connecting secure...");
@@ -69,6 +72,9 @@ function requestPiece(x, y) {
 }
 
 function drawBoardNew(pieces, colors) {
+    ding.pause();
+    ding.currentTime = 0;
+    
     console.log("pieces: ");
     console.log(pieces);
     console.log("colors: ");
@@ -117,6 +123,8 @@ function drawBoardNew(pieces, colors) {
         table.appendChild(tr);
     }
     board.appendChild(table)
+
+    ding.play();
 }
 
 let chosenX = -1;
