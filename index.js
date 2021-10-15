@@ -2,6 +2,7 @@ const express = require('express');
 const { read } = require('fs');
 const board = require('./board');
 const cookieParser = require("cookie-parser");
+const fileupload = require("express-fileupload");
 
 class boardState {
     constructor(board) {
@@ -52,6 +53,10 @@ webSocketServer.on('connection', ws => {
                 let currBoard = boards[parsed.game].board;
                 ws.send(JSON.stringify({ res: "boardRes", pieces: currBoard.getPiecesStr(),  colors: currBoard.getColorsStr()}))
             }
+            if (parsed.req == "save") {
+                let currBoard = boards[parsed.game].board;
+                ws.send(JSON.stringify({ res: "saveFile", saveData: JSON.stringify({ pieces: currBoard.getPiecesStr(), colors: currBoard.getColorsStr() }) }));
+            }
         } catch (e) {
             console.error(e);
         }
@@ -78,6 +83,7 @@ app.set('view engine', 'pug');
 app.set('views', '/views');
 app.use(express.static('public'));
 app.use(express.json());
+app.use(fileupload());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use('/game', express.static('public'));
@@ -151,6 +157,22 @@ app.get('/move', (req, res) => {
         return;
     }
     res.status(404).send();
+})
+
+app.post('/import', (req, res) => {
+    let abc = "abcdefghijklmnopqrstuvwxyz";
+    let id = ""
+    for (let i = 0; i < 10; i++) {
+        id += abc[Math.floor(Math.random() * abc.length)];
+    }
+    let userid = "";
+    for (let i = 0; i < 10; i++) {
+        userid += abc[Math.floor(Math.random() * abc.length)];
+    }
+    boards[id] = new boardState(new board(req.files.importFile.data));
+    console.log(`Game created. List of games:`)
+    console.log(boards);
+    return res.redirect("/game/" + id);
 })
 
 server.listen(process.env.PORT, '0.0.0.0', () => {

@@ -28,6 +28,17 @@ ws.onmessage = message => {
     if (resp.res == "boardRes") {
         drawBoardNew(resp.pieces, resp.colors);
     }
+    if (resp.res == "saveFile") {
+        let down = document.createElement('a');
+        down.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(resp.saveData));
+        down.setAttribute('download', game + ".txt");
+
+        down.style.display = 'none';
+        document.body.appendChild(down);
+
+        down.click();
+        document.body.removeChild(down);
+    }
 }
 
 function requestBoard() {
@@ -179,4 +190,8 @@ function getImage(td, name, x, y) {
         }
     });
     td.appendChild(button);
+}
+
+function save() {
+    ws.send(JSON.stringify({ req: "save", game: game }))
 }

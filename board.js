@@ -1,8 +1,16 @@
 class board {
-    constructor() {
-        this.pieces = ["bkrqirkb", "pppppppp", "", "", "", "", "pppppppp", "bkrqirkb"];
-        this.colors = ["bbbbbbbb", "bbbbbbbb", "", "", "", "", "wwwwwwww", "wwwwwwww"];
-    
+    constructor(bdata = null) {
+        if (bdata == null) {
+            this.pieces = ["bkrqirkb", "pppppppp", "", "", "", "", "pppppppp", "bkrqirkb"];
+            this.colors = ["bbbbbbbb", "bbbbbbbb", "", "", "", "", "wwwwwwww", "wwwwwwww"];
+        }
+        else {
+            let parsed = JSON.parse(bdata);
+            this.pieces = parsed.pieces;
+            this.colors = parsed.colors;
+            console.log(this.pieces);
+            console.log(this.colors);
+        }
         this.pb = [ [], [], [], [], [], [], [], [] ];
         for (let y = 0; y < 8; y++) {
             for (let x = 0; x < 8; x++) {
