@@ -140,6 +140,6 @@ app.get('/move', (req, res) => {
     res.status(404).send();
 })
 
-server.listen(process.env.PORT, () => {
+server.listen(process.env.PORT, '0.0.0.0', () => {
     console.log(`Listening at ${process.env.PORT}`);
 });
