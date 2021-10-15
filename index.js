@@ -1,6 +1,7 @@
 const express = require('express');
 const { read } = require('fs');
 const board = require('./board');
+const cookieParser = require("cookie-parser");
 
 class boardState {
     constructor(board) {
@@ -29,7 +30,9 @@ const app = express();
 
 const WebSocket = require( "ws");
 const http = require('http');
+const https = require('https');
 const { constants } = require('buffer');
+const { WebSocketServer } = require('ws');
 
 const server = http.createServer(app);
 
@@ -76,6 +79,7 @@ app.set('views', '/views');
 app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.use('/game', express.static('public'));
 
 app.get("/", (req, res) => {
@@ -87,6 +91,10 @@ app.get("/create", (req, res) => {
     let id = ""
     for (let i = 0; i < 10; i++) {
         id += abc[Math.floor(Math.random() * abc.length)];
+    }
+    let userid = "";
+    for (let i = 0; i < 10; i++) {
+        userid += abc[Math.floor(Math.random() * abc.length)];
     }
     boards[id] = new boardState(new board);
     console.log(`Game created. List of games:`)
@@ -126,8 +134,13 @@ app.get('/move', (req, res) => {
     if (boards[req.query.game]) {
         let currBoard = boards[req.query.game].getBoard();
         let piece = currBoard.getPiece(req.query.x, req.query.y);
-        let targetPiece = currBoard.getPiece(req.query.targetX, req.query.targetY);
+        let targetPiece = currBoard.getPiece(req.query.targetX, req.query.targetY); // For future checks
         // Do checks here
+        if (req.query.x == req.query.targetX && req.query.y == req.query.targetY) {
+            res.status(200).send();
+            return;
+        }
+        // Continue work
         currBoard.setPiece(piece, req.query.targetX, req.query.targetY);
         currBoard.setPiece(currBoard.getEmptyPiece(req.query.x, req.query.y), req.query.x, req.query.y);
         console.log("Piece moved");
