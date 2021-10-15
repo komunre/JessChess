@@ -26,6 +26,10 @@
     height: 60px;
 }
 
+.piece_button {
+    width: 60px;
+}
+
 #ch {
     display: inline;
     white-space: nowrap;

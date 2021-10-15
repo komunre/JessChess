@@ -189,6 +189,7 @@ function getImage(td, name, x, y) {
             document.getElementById("ch").innerHTML = "none";
         }
     });
+    button.className = "piece_button";
     td.appendChild(button);
 }
 
